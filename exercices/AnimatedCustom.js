@@ -1,32 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { Animated, StyleSheet, View } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 
 const AnimatedCustom = (props) => {
-    const [state, setState] = useState(
-        {
-            animationValue: new Animated.Value(0),
-            viewState: true
-        }
+    const [fadeAnim] = useState(new Animated.Value(0))  // Initial value for opacity: 0
+
+    React.useEffect(() => {
+        Animated.timing(
+            fadeAnim,
+            {
+                toValue: 1,
+                duration: 10000,
+            }
+        ).start();
+    }, [])
+
+    return (
+        <Animated.View                 // Special animatable View
+            style={{
+                ...props.style,
+                opacity: fadeAnim,         // Bind opacity to animated value
+            }}
+        >
+            {props.children}
+        </Animated.View>
     );
+}
 
-    const toggleAnimation = () => {
-        
-    }
-
-    return <>
-        <View style={styles.container}>
-            <View style={{ backgroundColor: 'blue', flex: 0.5 }} />
-            <View style={{ backgroundColor: 'red', flex: 0.5 }} />
+// You can then use your `FadeInView` in place of a `View` in your components:
+export default () => {
+    return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <AnimatedCustom style={{ width: 250, height: 50, backgroundColor: 'powderblue' }}>
+                <Text style={{ fontSize: 28, textAlign: 'center', margin: 10 }}>Fading in</Text>
+            </AnimatedCustom>
         </View>
-    </>
-
-};
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        height: 100
-    }
-});
-export default AnimatedCustom;
+    )
+}
