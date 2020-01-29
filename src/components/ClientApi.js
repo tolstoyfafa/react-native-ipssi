@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ActivityIndicator, Text, View, ListItem, Body, Right, Icon } from 'react-native';
+import { FlatList, ActivityIndicator, Text, View, Button, Body, Right, Icon } from 'react-native';
 import fetchDataVelibsApi from './FetchDataApi';
 
 
@@ -33,12 +33,20 @@ export default class ClientApi extends React.Component {
             <View style={{ flex: 1, padding: 20, backgroundColor: 'yellow' }}>
                 <ActivityIndicator />
                 <Text>{this.state.isConnected ? 'CONNECTED' : 'NOT CONNECTED'} </Text>
-                <FlatList
-                    data={this.state.velibs}
-                    keyExtractor={(item, index) => item.datasetid}
-                    renderItem={({ item }) =>
-                        <Text>{item.fields.station_name}</Text>}
-                />
+                {/* Todo: ADD a condition to 
+                handle no connexion */}
+                {this.state.velibs ?
+                    (<FlatList
+                        data={this.state.velibs}
+                        keyExtractor={(item, index) => item.datasetid}
+                        renderItem={({ item }) =>
+                            <Text>{item.fields.station_name}</Text>
+                        }
+                    />) :
+                    (<View>
+                        <Text>Can not access to server</Text>
+                    </View>)
+                }
             </View>
         )
     }
