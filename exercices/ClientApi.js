@@ -1,6 +1,8 @@
 import React from 'react';
 import { FlatList, ActivityIndicator, Text, View, AsyncStorage } from 'react-native';
 
+
+
 export default class ClientApi extends React.Component {
 
     constructor(props) {
@@ -8,28 +10,27 @@ export default class ClientApi extends React.Component {
         this.state = { isConnected: false }
     }
 
-    componentDidMount() {
-        return fetch('https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reeles')
-            .then(res => res.json())
-            .then((jsonResponse) => {
-                console.log(jsonResponse)
-                AsyncStorage.setItem('data', JSON.stringify(jsonResponse.datasets))
+    async componentDidMount() {
+        try {
+            const res = await fetch('https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reeles');
+            const jsonResponse = await res.json();
+            console.log(jsonResponse);
+            AsyncStorage.setItem('data', JSON.stringify(jsonResponse.datasets));
+            this.setState({
+                velibs: jsonResponse.datasets,
+                isConnected: true,
+            });
+        }
+        catch (error) {
+            console.log(error);
+            AsyncStorage.getItem('data').then((value) => {
                 this.setState({
-                    velibs: jsonResponse.datasets,
-                    isConnected: true,
+                    velibs: JSON.parse(value),
+                    isConnected: false,
                 });
-            }).catch((error) => {
-                console.log(error)
-                AsyncStorage.getItem('data').then((value) => {
-                    this.setState({
-                        velibs: JSON.parse(value),
-                        isConnected: false,
-                    });
-                    ;
-                }
-                )
-            }
-            )
+                ;
+            });
+        }
     };
 
 
