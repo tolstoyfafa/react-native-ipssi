@@ -7,8 +7,7 @@
  */
 
 import React from 'react';
-import AnimatedCustom from './exercices/AnimatedCustom';
-import ClientApi from './exercices/ClientApi';
+import ClientApi from './src/components/ClientApi';
 
 
 
