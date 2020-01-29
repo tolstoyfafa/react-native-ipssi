@@ -30,12 +30,14 @@ export default class ClientApi extends React.Component {
     render() {
 
         return (
-            <View style={{ flex: 1, padding: 20 }}>
+            <View style={{ flex: 1, padding: 20, backgroundColor: 'yellow' }}>
                 <ActivityIndicator />
                 <Text>{this.state.isConnected ? 'CONNECTED' : 'NOT CONNECTED'} </Text>
                 <FlatList
                     data={this.state.velibs}
-                    renderItem={({ item }) => <Text>{item.datasetid}</Text>}
+                    keyExtractor={(item, index) => item.datasetid}
+                    renderItem={({ item }) =>
+                        <Text>{item.fields.station_name}</Text>}
                 />
             </View>
         )

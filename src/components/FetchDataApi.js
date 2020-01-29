@@ -4,7 +4,7 @@ export default async (url) => {
         const res = await fetch(url);
         const jsonResponse = await res.json();
         console.log(jsonResponse);
-        AsyncStorage.setItem('data', JSON.stringify(jsonResponse));
+        AsyncStorage.setItem('data', JSON.stringify(jsonResponse.records));
         return jsonResponse.records;
     }
     catch (error) {

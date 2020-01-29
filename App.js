@@ -8,6 +8,7 @@
 
 import React from 'react';
 import ClientApi from './src/components/ClientApi';
+import Station from './src/components/Station';
 
 
 
@@ -15,6 +16,7 @@ const App: () => React$Node = () => {
 
   return (
     <>
+      <Station />
       <ClientApi />
     </>
   );
