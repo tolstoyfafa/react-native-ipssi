@@ -10,7 +10,7 @@ export default function StationScreen(props) {
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: '#ddd',
+            backgroundColor: '#fff',
         },
         map: {
             flex: 1,
@@ -19,12 +19,13 @@ export default function StationScreen(props) {
         listItem: {
             flex: 0.8,
             flexDirection: 'column',
-            backgroundColor: '#d3d3d3',
+            backgroundColor: '#01d1',
             marginBottom: 10,
         },
-        textStyle: {
-            textAlign: 'left',
-            fontSize: 20
+        textItem: {
+            fontSize: 20,
+            textAlign: 'center',
+            color: 'palevioletred'
         }
     });
 
@@ -50,16 +51,16 @@ export default function StationScreen(props) {
         <View style={styles.container}>
             {/* Use react vectors to add icones styles */}
             <View style={styles.listItem}>
-                <Text style={styles.textStyle}>Station name: {data.station_name}</Text>
+                <Text style={styles.textItem}>Station name: {data.station_name}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textStyle}>Station state: {data.station_state}</Text>
+                <Text style={styles.textItem}>Station state: {data.station_state}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textStyle}>Credit card: {data.creditcard}</Text>
+                <Text style={styles.textItem}>Credit card: {data.creditcard}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textStyle}>Available Bikes: {data.nbbike}</Text>
+                <Text style={styles.textItem}>Available Bikes: {data.nbbike}</Text>
             </View>
         </View>
     </>)

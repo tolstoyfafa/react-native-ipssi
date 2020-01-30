@@ -22,16 +22,18 @@ export default function ListScreen(props) {
         container: {
             backgroundColor: '#fff'
         },
-        viewItem: {
+        itemContainer: {
+            height: 40,
+            padding: 3,
             flexDirection: 'row',
-            backgroundColor: "#ddd",
-            marginBottom: 10,
+            backgroundColor: "#01d1",
+            borderRadius: 10,
+            marginBottom: 5,
         },
         textItem: {
-            backgroundColor: '#d3d3d3',
-
             fontSize: 20,
-            textAlign: 'center'
+            textAlign: 'center',
+            color: 'palevioletred'
         }
     });
 
@@ -49,19 +51,17 @@ export default function ListScreen(props) {
         , []);
 
     const renderItem = ({ item }) =>
-        <View style={styles.viewItem}>
+        <View style={styles.itemContainer}>
             <Text onPress={() => {
                 props.navigation.navigate('Station', {
                     stationDetails: item.fields
                 })
             }} style={styles.textItem}>
                 {item.fields.station_name}</Text>
-
         </View>
 
     return (
         <ScrollView style={styles.container}>
-            <ActivityIndicator />
             <Text>{state.isConnected ? 'CONNECTED' : 'NOT CONNECTED'} </Text>
             {/* Todo: ADD a condition to 
             handle no connexion */}
