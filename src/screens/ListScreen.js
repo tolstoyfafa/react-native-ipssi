@@ -7,6 +7,7 @@ import {
     View,
     ActivityIndicator
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function ListScreen(props) {
 
@@ -21,6 +22,17 @@ export default function ListScreen(props) {
         container: {
             flex: 1,
             backgroundColor: '#fff'
+        },
+        viewItem: {
+            flex: 1,
+            flexDirection: 'row',
+            backgroundColor: "#ddd"
+        },
+        textItem: {
+            backgroundColor: '#d3d3d3',
+            marginBottom: 10,
+            fontSize: 20,
+            textAlign: 'center'
         }
     });
 
@@ -37,8 +49,19 @@ export default function ListScreen(props) {
     }
         , []);
 
+    const renderItem = ({ item }) =>
+        <View style={styles.viewItem}>
+            <Text onPress={() => {
+                props.navigation.navigate('Station', {
+                    stationDetails: item.fields
+                })
+            }} style={styles.textItem}>
+                {item.fields.station_name}</Text>
+
+        </View>
+
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <ActivityIndicator />
             <Text>{state.isConnected ? 'CONNECTED' : 'NOT CONNECTED'} </Text>
             {/* Todo: ADD a condition to 
@@ -48,20 +71,13 @@ export default function ListScreen(props) {
                 (<FlatList
                     data={state.velibs}
                     keyExtractor={(item, index) => item.datasetid}
-                    renderItem={({ item }) =>
-                        <Text onPress={() => {
-                            props.navigation.navigate('Station', {
-                                stationDetails: item.fields
-                            })
-                        }}>
-                            {item.fields.station_name}</Text>
-                    }
+                    renderItem={renderItem}
                 />) :
                 (<View>
                     <Text>Can not access to server</Text>
                 </View>)
             }
-        </View>
+        </ScrollView>
     );
 }
 
