@@ -17,6 +17,12 @@ export default function ListScreen(props) {
         }
     )
 
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: '#fff'
+        }
+    });
 
     useEffect(() => {
         fetchDataVelibsApi('https://raw.githubusercontent.com/tlenclos/fake-opendata-velib-server/master/db.json')
@@ -32,7 +38,7 @@ export default function ListScreen(props) {
         , []);
 
     return (
-        <View style={{ flex: 1, padding: 20, backgroundColor: 'yellow' }}>
+        <View style={styles.container}>
             <ActivityIndicator />
             <Text>{state.isConnected ? 'CONNECTED' : 'NOT CONNECTED'} </Text>
             {/* Todo: ADD a condition to 
@@ -63,9 +69,4 @@ ListScreen.navigationOptions = {
     title: "Vélibs",
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
-    }
-});
+
