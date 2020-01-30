@@ -12,6 +12,10 @@ export default function StationScreen(props) {
             flex: 1,
             backgroundColor: '#ddd',
         },
+        map: {
+            flex: 1,
+            height: 200
+        },
         listItem: {
             flex: 0.8,
             flexDirection: 'column',
@@ -27,22 +31,24 @@ export default function StationScreen(props) {
     const data = props.navigation.getParam('stationDetails', 'default');
 
     return (<>
+        <Text style={{ textAlign: 'center', fontStyle: 'italic', fontSize: 30 }}>
+            Station Details
+        </Text>
         <MapView
             provider={PROVIDER_GOOGLE}
-            style={{
-                flex: 1,
-                height: 200
-            }}
-            region={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.015,
-                longitudeDelta: 0.0121,
-            }} ></MapView>
+            style={styles.map}
+            /*    region={{
+                   latitude: 37.78825,
+                   longitude: -122.4324,
+                   latitudeDelta: 0.015,
+                   longitudeDelta: 0.0121,
+               }} */
+            zoomEnabled
+            showsUserLocation>
+
+        </MapView>
         <View style={styles.container}>
-            <Text style={{ textAlign: 'center', fontStyle: 'italic', fontSize: 30 }}>
-                Station Details
-        </Text>
+            {/* Use react vectors to add icones styles */}
             <View style={styles.listItem}>
                 <Text style={styles.textStyle}>Station name: {data.station_name}</Text>
             </View>

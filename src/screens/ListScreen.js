@@ -20,17 +20,16 @@ export default function ListScreen(props) {
 
     const styles = StyleSheet.create({
         container: {
-            flex: 1,
             backgroundColor: '#fff'
         },
         viewItem: {
-            flex: 1,
             flexDirection: 'row',
-            backgroundColor: "#ddd"
+            backgroundColor: "#ddd",
+            marginBottom: 10,
         },
         textItem: {
             backgroundColor: '#d3d3d3',
-            marginBottom: 10,
+
             fontSize: 20,
             textAlign: 'center'
         }
