@@ -40,7 +40,6 @@ export default function ListScreen(props) {
     useEffect(() => {
         fetchDataVelibsApi('https://raw.githubusercontent.com/tlenclos/fake-opendata-velib-server/master/db.json')
             .then((value) => {
-                console.log(value);
                 setState({
                     velibs: value,
                     isConnected: true,
