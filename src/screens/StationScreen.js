@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 
@@ -26,6 +27,18 @@ export default function StationScreen(props) {
     const data = props.navigation.getParam('stationDetails', 'default');
 
     return (<>
+        <MapView
+            provider={PROVIDER_GOOGLE}
+            style={{
+                flex: 1,
+                height: 200
+            }}
+            region={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+            }} ></MapView>
         <View style={styles.container}>
             <Text style={{ textAlign: 'center', fontStyle: 'italic', fontSize: 30 }}>
                 Station Details
