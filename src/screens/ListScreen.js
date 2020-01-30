@@ -43,7 +43,11 @@ export default function ListScreen(props) {
                     data={state.velibs}
                     keyExtractor={(item, index) => item.datasetid}
                     renderItem={({ item }) =>
-                        <Text onPress={() => { props.navigation.navigate('Station') }}>
+                        <Text onPress={() => {
+                            props.navigation.navigate('Station', {
+                                stationDetails: item.fields
+                            })
+                        }}>
                             {item.fields.station_name}</Text>
                     }
                 />) :

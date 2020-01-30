@@ -1,31 +1,53 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'blue',
-    },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'right',
-        color: 'blue',
-        margin: 10,
-    }
-});
 
 
-export default StationScreen = () =>
 
-    <View>
-        <Text style={styles.container}>Sation Details</Text>
-        <Text>
-            Edit App.js to change this screen and turn it
-            into your app.
-    </Text>
-    </View>
+export default function StationScreen(props) {
+
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            backgroundColor: '#ddd',
+        },
+        listItem: {
+            flex: 0.8,
+            flexDirection: 'column',
+            backgroundColor: '#d3d3d3',
+            marginBottom: 10,
+        },
+        textStyle: {
+            textAlign: 'left',
+            fontSize: 20
+        }
+    });
+
+    const data = props.navigation.getParam('stationDetails', 'default');
+
+    return (<>
+        <View style={styles.container}>
+            <Text style={{ textAlign: 'center', fontStyle: 'italic', fontSize: 30 }}>
+                Station Details
+        </Text>
+            <View style={styles.listItem}>
+                <Text style={styles.textStyle}>Station name: {data.station_name}</Text>
+            </View>
+            <View style={styles.listItem}>
+                <Text style={styles.textStyle}>Station state: {data.station_state}</Text>
+            </View>
+            <View style={styles.listItem}>
+                <Text style={styles.textStyle}>Credit card: {data.creditcard}</Text>
+            </View>
+            <View style={styles.listItem}>
+                <Text style={styles.textStyle}>Available Bikes: {data.nbbike}</Text>
+            </View>
+        </View>
+    </>)
+}
+
+
+
 
 StationScreen.navigationOptions = {
     title: 'Details'
