@@ -3,10 +3,12 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import ListScreen from '../screens/ListScreen';
 import MapScreen from '../screens/MapScreen';
+import StationScreen from '../screens/StationScreen';
 
 const ListStack = createStackNavigator(
     {
         Home: ListScreen,
+        Station: StationScreen
     }
 );
 
@@ -21,7 +23,7 @@ const MapStack = createStackNavigator(
 );
 
 MapStack.navigationOptions = {
-    tabBarLabel: 'map',
+    tabBarLabel: 'Map',
 };
 
 export default createBottomTabNavigator({

@@ -5,11 +5,9 @@
  * @format
  * @flow
  */
-
 import React from 'react';
-import ClientApi from './src/components/ClientApi';
-import Station from './src/components/Station';
 import AppNavigator from './src/navigation/AppNavigator';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 
 
 
@@ -17,11 +15,19 @@ const App: () => React$Node = () => {
 
   return (
     <>
-      <ClientApi />
-      <AppNavigator />
+      <View style={styles.container}>
+        <AppNavigator />
+      </View>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'blue',
+  },
+});
 
 
 

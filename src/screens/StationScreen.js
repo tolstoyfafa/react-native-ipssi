@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 });
 
 
-export default Station = () =>
+export default StationScreen = () =>
 
     <View>
         <Text style={styles.container}>Sation Details</Text>
@@ -27,3 +27,6 @@ export default Station = () =>
     </Text>
     </View>
 
+StationScreen.navigationOptions = {
+    title: 'Details'
+}
