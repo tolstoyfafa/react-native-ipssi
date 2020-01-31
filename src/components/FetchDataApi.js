@@ -7,6 +7,7 @@ export default async (url) => {
         return jsonResponse.records;
     }
     catch (error) {
-        return AsyncStorage.getItem('data');
+        console.log(error)
+        return JSON.parse(AsyncStorage.getItem('data'));
     }
 }
