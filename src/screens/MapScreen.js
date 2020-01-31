@@ -58,10 +58,9 @@ export default function MapScreen() {
                 /* It should be a static coords for paris  */
                 latitude: userPosition.latitude,
                 longitude: userPosition.longitude,
-                latitudeDelta: 0.04,
-                longitudeDelta: 0.05,
+                latitudeDelta: 0.02,
+                longitudeDelta: 0.03,
             }}
-        /* Put here user location */
         >
             {
                 markers.map((marker, i) => {
