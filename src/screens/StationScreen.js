@@ -1,9 +1,7 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Alert } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-
-
-
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function StationScreen({ navigation }) {
 
@@ -15,22 +13,21 @@ export default function StationScreen({ navigation }) {
         title: {
             textAlign: 'center',
             fontStyle: 'italic',
-            fontSize: 30
+            fontSize: 35
         },
         map: {
-            flex: 1,
-            height: 200
+            flex: 0.8,
+            height: 200,
         },
         listItem: {
-            flex: 0.8,
-            flexDirection: 'column',
+            flex: 1,
+            flexDirection: 'row',
             backgroundColor: '#01d1',
-            marginBottom: 10,
+            marginBottom: 5,
         },
         textItem: {
             fontSize: 20,
-            textAlign: 'center',
-            color: 'palevioletred'
+            textAlign: 'left',
         },
         imageStyle: {
             height: 6,
@@ -73,7 +70,7 @@ export default function StationScreen({ navigation }) {
             provider={PROVIDER_GOOGLE}
             style={styles.map}
             zoomEnabled
-            showsUserLocation
+            showsUserLocation={true}
             initialRegion={{
                 latitude: geo[0],
                 longitude: geo[1],
@@ -90,23 +87,44 @@ export default function StationScreen({ navigation }) {
                 /* Add a custom marker image */
                 description={"ddd"}>
             </Marker>
+            <Marker
+                coordinate={{
+                    latitude: geo[0],
+                    longitude: geo[1]
+                }}
+                /* Add a custom marker image */
+                description={"ddd"}>
+            </Marker>
+
 
         </MapView>
-        <View style={styles.container}>
-            {/* Use react vectors to add icones styles */}
+        <ScrollView style={styles.container}>
             <View style={styles.listItem}>
-                <Text style={styles.textItem}>Station: {station_name}</Text>
+                <Text style={styles.title}>{station_name}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textItem}>Etat: {station_state}</Text>
+                <Text style={styles.textItem}>🚶‍♂️   from you: {station_name}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textItem}>Paiement par carte: {creditcard}</Text>
+                <Text style={styles.textItem}>🔨   State: {station_state}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textItem}>Vélos disponibles: {nbbike}</Text>
+                <Text style={styles.textItem}> 💳  Card payment: {creditcard}</Text>
             </View>
-        </View>
+            <View style={styles.listItem}>
+                <Text style={styles.textItem}> 📆   Last update: {duedate}</Text>
+            </View>
+            <View style={styles.listItem}>
+                <Text style={styles.textItem}>🚲   Availables bikes: {nbbike}</Text>
+            </View>
+            <View style={styles.listItem}>
+                <Text style={styles.textItem}
+                    onPress={() => {
+                        Alert.alert('Add to favourite')
+                    }}
+                >🧡   Add to favourite</Text>
+            </View>
+        </ScrollView>
     </>)
 }
 

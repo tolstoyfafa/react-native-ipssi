@@ -5,6 +5,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 import fetchDataVelibsApi from '../components/FetchDataApi';
+import getPostion from '../components/Geoloc';
 export default function MapScreen() {
 
     const styles = {
@@ -17,10 +18,34 @@ export default function MapScreen() {
 
     const [markers, setMarkers] = useState([]);
 
-    useEffect(() => {
-        fetchDataVelibsApi('https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel').then(records => {
-            setMarkers(records)
+    const [userPosition, setUserPosition] = useState([]);
+
+    const URL_API = 'https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel';
+
+    const changePosition = () => {
+        getPosition().then(position => {
+            console.log(position);
+
+            setUserPosition({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            })
+
+            fetchDataVelibsApi(
+                URL_API + '&geofilter.distance='
+                + position.coords.latitude + ','
+                + position.coords.longitude + ','
+                + 1000)
+                .then(records => {
+                    setMarkers(records)
+                })
+            console.log(markers)
         })
+    }
+
+
+    useEffect(() => {
+        changePosition()
     }, [])
 
     return (
@@ -28,16 +53,16 @@ export default function MapScreen() {
             provider={PROVIDER_GOOGLE}
             style={styles.map}
             zoomEnabled
-            showsUserLocation
+            showsUserLocation={true}
             initialRegion={{
                 /* It should be a static coords for paris  */
-                latitude: 48,
-                longitude: 2,
-                latitudeDelta: 0.04,
-                longitudeDelta: 0.05,
+                latitude: userPosition.latitude,
+                longitude: userPosition.longitude,
+                latitudeDelta: 0.02,
+                longitudeDelta: 0.03,
             }}
-        /* Put here user location */
-        >{
+        >
+            {
                 markers.map((marker, i) => {
                     return (<Marker
                         key={i}
@@ -46,7 +71,6 @@ export default function MapScreen() {
                             longitude: marker.fields.geo[1]
                         }
                         }
-                        /* Put here all markers  */
                         /* Add a custom marker image */
                         description={marker.fields.station_name}>
                     </Marker>)
