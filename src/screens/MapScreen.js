@@ -5,6 +5,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 import fetchDataVelibsApi from '../components/FetchDataApi';
+import getPostion from '../components/Geoloc';
 export default function MapScreen() {
 
     const styles = {
@@ -21,6 +22,10 @@ export default function MapScreen() {
         fetchDataVelibsApi('https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel').then(records => {
             setMarkers(records)
         })
+
+        getPosition().then(postion => {
+            console.log(postion)
+        }).catch(e => console.log(e))
     }, [])
 
     return (
