@@ -18,14 +18,34 @@ export default function MapScreen() {
 
     const [markers, setMarkers] = useState([]);
 
-    useEffect(() => {
-        fetchDataVelibsApi('https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel').then(records => {
-            setMarkers(records)
-        })
+    const [userPosition, setUserPosition] = useState([]);
 
-        getPosition().then(postion => {
-            console.log(postion)
-        }).catch(e => console.log(e))
+    const URL_API = 'https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel';
+
+    const changePosition = () => {
+        getPosition().then(position => {
+            console.log(position);
+
+            setUserPosition({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            })
+
+            fetchDataVelibsApi(
+                URL_API + '&geofilter.distance='
+                + position.coords.latitude + ','
+                + position.coords.longitude + ','
+                + 1000)
+                .then(records => {
+                    setMarkers(records)
+                })
+            console.log(markers)
+        })
+    }
+
+
+    useEffect(() => {
+        changePosition()
     }, [])
 
     return (
@@ -36,8 +56,8 @@ export default function MapScreen() {
             showsUserLocation={true}
             initialRegion={{
                 /* It should be a static coords for paris  */
-                latitude: 48.856,
-                longitude: 2.352,
+                latitude: userPosition.latitude,
+                longitude: userPosition.longitude,
                 latitudeDelta: 0.04,
                 longitudeDelta: 0.05,
             }}
@@ -52,7 +72,6 @@ export default function MapScreen() {
                             longitude: marker.fields.geo[1]
                         }
                         }
-                        /* Put here all markers  */
                         /* Add a custom marker image */
                         description={marker.fields.station_name}>
                     </Marker>)

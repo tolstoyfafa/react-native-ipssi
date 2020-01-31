@@ -73,7 +73,7 @@ export default function StationScreen({ navigation }) {
             provider={PROVIDER_GOOGLE}
             style={styles.map}
             zoomEnabled
-            showsUserLocation
+            showsUserLocation={true}
             initialRegion={{
                 latitude: geo[0],
                 longitude: geo[1],
@@ -90,6 +90,7 @@ export default function StationScreen({ navigation }) {
                 /* Add a custom marker image */
                 description={"ddd"}>
             </Marker>
+
 
         </MapView>
         <View style={styles.container}>
