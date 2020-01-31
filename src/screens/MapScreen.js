@@ -31,8 +31,8 @@ export default function MapScreen() {
             showsUserLocation
             initialRegion={{
                 /* It should be a static coords for paris  */
-                latitude: 48,
-                longitude: 2,
+                latitude: 48.8566,
+                longitude: 2.3522,
                 latitudeDelta: 0.04,
                 longitudeDelta: 0.05,
             }}
