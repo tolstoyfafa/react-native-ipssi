@@ -33,16 +33,17 @@ export default function MapScreen() {
             provider={PROVIDER_GOOGLE}
             style={styles.map}
             zoomEnabled
-            showsUserLocation
+            showsUserLocation={true}
             initialRegion={{
                 /* It should be a static coords for paris  */
-                latitude: 48.8566,
-                longitude: 2.3522,
+                latitude: 48.856,
+                longitude: 2.352,
                 latitudeDelta: 0.04,
                 longitudeDelta: 0.05,
             }}
         /* Put here user location */
-        >{
+        >
+            {
                 markers.map((marker, i) => {
                     return (<Marker
                         key={i}
