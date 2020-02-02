@@ -1,7 +1,7 @@
-import React from 'react';
-import { Text, View, StyleSheet, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, StyleSheet, Alert, Button } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function StationScreen({ navigation }) {
 
@@ -35,7 +35,8 @@ export default function StationScreen({ navigation }) {
         }
     });
 
-    const data = navigation.getParam('stationDetails', 'default');
+    const stationDetails = navigation.getParam('stationDetails', 'default');
+    const [favs, setFavs] = useState([]);
 
     const {
         creditcard,
@@ -59,9 +60,8 @@ export default function StationScreen({ navigation }) {
         station_name,
         station_state,
         station_type
-    } = data
-    console.log(geo);
-    const markerImage = require('../images/bike.png');
+    } = stationDetails
+
     return (<>
         <Text style={styles.title}>
             Station Details
@@ -118,18 +118,40 @@ export default function StationScreen({ navigation }) {
                 <Text style={styles.textItem}>🚲   Availables bikes: {nbbike}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textItem}
-                    onPress={() => {
-                        Alert.alert('Add to favourite')
-                    }}
-                >🧡   Add to favourite</Text>
+                <TouchableOpacity>
+                    <Button /* style={styles.textItem} */
+                        title='🧡   Ajout aux favoris'
+                        onPress={() => {
+                            Alert.alert('Salut!',
+                                'voulez vous ajoutez cette station à vos station favorites?',
+
+                                [
+                                    {
+                                        text: 'Cancel',
+                                        onPress:
+                                            () => console.log('Cancel Pressed!')
+
+                                    },
+                                    {
+                                        text: 'OK',
+                                        onPress: () => {
+                                            console.log('OK')
+                                            setFavs(favs.push(stationDetails))
+                                            console.log(favs, "FROM StationScreen")
+                                            navigation.navigate('Home',
+                                                { favorite: favs }
+                                            )
+
+                                        }
+                                    }
+                                ])
+                        }}
+                    ></Button>
+                </TouchableOpacity>
             </View>
         </ScrollView>
     </>)
 }
-
-
-
 
 StationScreen.navigationOptions = {
     title: 'Details'
