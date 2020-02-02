@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Animated, Text, View } from 'react-native';
 
 const AnimatedCustom = (props) => {

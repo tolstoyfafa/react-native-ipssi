@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
 import getPosition from '../components/Geoloc';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-
-
 import fetchDataVelibsApi from '../components/FetchDataApi';
-import getPostion from '../components/Geoloc';
+
 export default function MapScreen() {
 
     const styles = {
@@ -15,17 +12,17 @@ export default function MapScreen() {
         }
     }
 
-
     const [markers, setMarkers] = useState([]);
 
-    const [userPosition, setUserPosition] = useState([]);
+    const [userPosition, setUserPosition] = useState({
+        latitude: 48.85652833333334,
+        longitude: 2.3127050000000002
+    });
 
     const URL_API = 'https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel';
 
     const changePosition = () => {
         getPosition().then(position => {
-            console.log(position);
-
             setUserPosition({
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude
@@ -39,7 +36,6 @@ export default function MapScreen() {
                 .then(records => {
                     setMarkers(records)
                 })
-            console.log(markers)
         })
     }
 
@@ -71,13 +67,10 @@ export default function MapScreen() {
                             longitude: marker.fields.geo[1]
                         }
                         }
-                        /* Add a custom marker image */
                         description={marker.fields.station_name}>
                     </Marker>)
                 })
             }
-
-
         </MapView>
     );
 }
@@ -86,9 +79,3 @@ MapScreen.navigationOptions = {
     title: 'Map',
 };
 
-const styless = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-});
