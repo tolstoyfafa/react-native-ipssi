@@ -1,27 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-native';
 import fetchDataVelibsApi from '../components/FetchDataApi';
-import {
-    StyleSheet,
-    Text,
-    FlatList,
-    View,
-    ActivityIndicator
-} from 'react-native';
+import { StyleSheet, Text, FlatList, Button, View, } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import PropTypes from 'prop-types';
 
-export default function ListScreen(props) {
-
-    const [state, setState] = useState(
-        {
-            isConnected: false,
-            velibs: [],
-        }
-    )
-
-
-    const [hidden, setHidden] = useState(true);
-
+export default function ListScreen({ navigation }) {
 
     const styles = StyleSheet.create({
         container: {
@@ -48,13 +31,24 @@ export default function ListScreen(props) {
             backgroundColor: '#6C9997',
             borderRadius: 10,
             marginBottom: 5,
-        }
-
+        },
+        textItemFv: {
+            fontSize: 20,
+            textAlign: 'center',
+            color: 'red'
+        },
     });
 
+    const [state, setState] = useState(
+        {
+            isConnected: false,
+            velibs: [],
+        }
+    )
 
-    const favorites = props.navigation.getParam('favorite', []);
+    const [hidden, setHidden] = useState(true);
 
+    const favorites = navigation.getParam('favorite', []);
 
     const url_api = 'https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel';
 
@@ -65,31 +59,27 @@ export default function ListScreen(props) {
                     velibs: value,
                     isConnected: true,
                 })
-            }
-            )
-    }
-
-        , []);
+            })
+    }, []);
 
     const renderItem = ({ item }) =>
         <View style={styles.itemContainer}>
             <Text onPress={() => {
-                props.navigation.navigate('Station', {
+                navigation.navigate('Station', {
                     stationDetails: item.fields
                 })
             }}
                 style={styles.textItem}>
-                {item.fields.station_name}</Text>
+                {item.fields.station_name}
+            </Text>
         </View>
 
     return (
         <ScrollView style={styles.container}>
             <Text>{state.isConnected ? 'CONNECTED' : 'NOT CONNECTED'} </Text>
-            {/* Todo: ADD a condition to 
-            handle no connexion */}
             <View>
                 <Button
-                    title='Favs'
+                    title='Station favorites'
                     onPress={() => {
                         setHidden(!hidden)
                     }}>
@@ -100,11 +90,10 @@ export default function ListScreen(props) {
                         keyExtractor={(item, index) => item.datasetid}
                         renderItem={({ item }) =>
                             <View style={styles.itemContainerFv}>
-                                <Text style={styles.textItem}>
+                                <Text style={styles.textItemFv}>
                                     {item.station_name}</Text>
                             </View>}
                     /> : null}
-
             </View>
 
             {
@@ -120,6 +109,15 @@ export default function ListScreen(props) {
             }
         </ScrollView >
     );
+}
+
+ListScreen.propTypes = {
+    navigation: PropTypes.shape(
+        {
+            navigate: PropTypes.func.isRequired,
+            getParam: PropTypes.func.isRequired
+        },
+    ).isRequired
 }
 
 ListScreen.navigationOptions = {

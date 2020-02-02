@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
 import getPosition from '../components/Geoloc';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-
-
 import fetchDataVelibsApi from '../components/FetchDataApi';
-import getPostion from '../components/Geoloc';
+
 export default function MapScreen() {
 
     const styles = {
@@ -14,7 +11,6 @@ export default function MapScreen() {
             height: 200
         }
     }
-
 
     const [markers, setMarkers] = useState([]);
 
@@ -71,7 +67,6 @@ export default function MapScreen() {
                             longitude: marker.fields.geo[1]
                         }
                         }
-                        /* Add a custom marker image */
                         description={marker.fields.station_name}>
                     </Marker>)
                 })

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, Alert, Button } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { PropTypes } from 'prop-types';
 
 export default function StationScreen({ navigation }) {
 
@@ -40,26 +41,11 @@ export default function StationScreen({ navigation }) {
 
     const {
         creditcard,
-        densitylevel,
         duedate,
         geo,
-        kioskstate,
-        maxbikeoverflow,
         nbbike,
-        nbbikeoverflow,
-        nbdock,
-        nbebike,
-        nbebikeoverflow,
-        nbedock,
-        nbfreedock,
-        nbfreeedock,
-        overflowactivation,
-        overflow,
-        station,
-        station_code,
         station_name,
         station_state,
-        station_type
     } = stationDetails
 
     return (<>
@@ -78,48 +64,36 @@ export default function StationScreen({ navigation }) {
                 longitudeDelta: 0.05,
             }}
         >
-
             <Marker
                 coordinate={{
                     latitude: geo[0],
                     longitude: geo[1]
                 }}
-                /* Add a custom marker image */
-                description={"ddd"}>
+                description={""}>
             </Marker>
-            <Marker
-                coordinate={{
-                    latitude: geo[0],
-                    longitude: geo[1]
-                }}
-                /* Add a custom marker image */
-                description={"ddd"}>
-            </Marker>
-
-
         </MapView>
         <ScrollView style={styles.container}>
             <View style={styles.listItem}>
                 <Text style={styles.title}>{station_name}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textItem}>🚶‍♂️   from you: {station_name}</Text>
+                <Text style={styles.textItem}>🚶‍♂️ Statation à  {station_name} De vous</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textItem}>🔨   State: {station_state}</Text>
+                <Text style={styles.textItem}>🔨   Etat: {station_state}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textItem}> 💳  Card payment: {creditcard}</Text>
+                <Text style={styles.textItem}> 💳  Paiement par carte: {creditcard}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textItem}> 📆   Last update: {duedate}</Text>
+                <Text style={styles.textItem}> 📆   Mise à jour: {duedate}</Text>
             </View>
             <View style={styles.listItem}>
-                <Text style={styles.textItem}>🚲   Availables bikes: {nbbike}</Text>
+                <Text style={styles.textItem}>🚲   Vélos disponibles: {nbbike}</Text>
             </View>
             <View style={styles.listItem}>
                 <TouchableOpacity>
-                    <Button /* style={styles.textItem} */
+                    <Button
                         title='🧡   Ajout aux favoris'
                         onPress={() => {
                             Alert.alert('Salut!',
@@ -135,9 +109,7 @@ export default function StationScreen({ navigation }) {
                                     {
                                         text: 'OK',
                                         onPress: () => {
-                                            console.log('OK')
                                             setFavs(favs.push(stationDetails))
-                                            console.log(favs, "FROM StationScreen")
                                             navigation.navigate('Home',
                                                 { favorite: favs }
                                             )
@@ -151,6 +123,15 @@ export default function StationScreen({ navigation }) {
             </View>
         </ScrollView>
     </>)
+}
+
+StationScreen.propTypes = {
+    navigation: PropTypes.shape(
+        {
+            getParam: PropTypes.func.isRequired,
+            navigate: PropTypes.func.isRequired
+        }
+    ).isRequired,
 }
 
 StationScreen.navigationOptions = {
